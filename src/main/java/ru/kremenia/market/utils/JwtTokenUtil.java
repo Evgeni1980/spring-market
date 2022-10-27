@@ -21,7 +21,7 @@ public class JwtTokenUtil {
  
     @Value("${jwt.lifetime}")
     private Integer jwtLifetime;
-    // UserDetails информация о пользователе. Из нее формируется токен
+
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         List<String> rolesList = userDetails.getAuthorities().stream()
@@ -29,8 +29,6 @@ public class JwtTokenUtil {
                 .collect(Collectors.toList());
         claims.put("roles", rolesList);
 
-        // issuedDate время выпуска токена
-        // expiredDate когда закончится
         Date issuedDate = new Date();
         Date expiredDate = new Date(issuedDate.getTime() + jwtLifetime);
         return Jwts.builder()

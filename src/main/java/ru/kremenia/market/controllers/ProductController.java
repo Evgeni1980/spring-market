@@ -11,15 +11,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-// Начальный адрес
 @RequestMapping("/api/v1/products")
-// Обязателен при внедрении, для всех обязательных полей создается конструктор
 @RequiredArgsConstructor
 public class ProductController {
-    // Внедряем ProductService
     private final ProductService productService;
-
-    // @GetMapping указывает что для доступа к методу findAllProducts() нужно получит get запрос
     @GetMapping
     public List<ProductDto> findAllProducts() {
         return productService.findAll().stream()

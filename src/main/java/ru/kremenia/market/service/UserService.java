@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
-    // Метод поиска пользователей по имени
+
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
