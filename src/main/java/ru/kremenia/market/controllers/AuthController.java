@@ -7,22 +7,23 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kremenia.market.dtos.JwtRequest;
 import ru.kremenia.market.dtos.JwtResponse;
+import ru.kremenia.market.dtos.StringResponse;
 import ru.kremenia.market.service.UserService;
 import ru.kremenia.market.utils.JwtTokenUtil;
+
+import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
-    // userService он знает, где лежит пользователь
     private final UserService userService;
-    // JwtTokenUtil утилита для работы с токенами
     private final JwtTokenUtil jwtTokenUtil;
-    // authenticationManager спринговый бин который занимается аутентификациеей
     private final AuthenticationManager authenticationManager;
 
     @PostMapping("/auth")
@@ -36,4 +37,10 @@ public class AuthController {
         String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));
     }
+
+    @GetMapping("/auth_check")
+    public StringResponse authCheck(Principal principal) {
+        return new StringResponse(principal.getName());
+    }
+
 }

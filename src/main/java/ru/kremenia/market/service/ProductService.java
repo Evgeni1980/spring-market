@@ -9,22 +9,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor  // Для всех обязательных полей создается конструктор
+@RequiredArgsConstructor
 public class ProductService {
-    // Внедрение репозитория продуктов
     private final ProductRepository productRepository;
 
-    // Метод возвращающий весь список продуктов
     public List<Product> findAll() {
         return productRepository.findAll();
     }
 
-    // Метод возвращающий продукт по id
     public Optional<Product> findById(Long id) {
         return productRepository.findById(id);
     }
 
-    // Метод удаления по id
     public void deleteById(Long id) {
         productRepository.deleteById(id);
     }

@@ -1,6 +1,6 @@
 package ru.kremenia.market.service;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.kremenia.market.entities.Product;
 import ru.kremenia.market.exceptions.ResourceNotFoundException;
@@ -9,7 +9,7 @@ import ru.kremenia.market.model.Cart;
 import javax.annotation.PostConstruct;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class CartService {
     private final ProductService productService;
     private Cart tempCart;
