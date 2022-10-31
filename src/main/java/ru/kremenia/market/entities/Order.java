@@ -1,27 +1,35 @@
 package ru.kremenia.market.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
+@Table(name = "orders")
 @Data
-@Table(name = "products")
-public class Product {
-
+@NoArgsConstructor
+@AllArgsConstructor
+public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title")
-    private String title;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private  User user;
 
-    @Column(name = "price")
-    private int price;
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> items;
+
+    @Column(name = "total_price")
+    private int totalPrice;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -30,14 +38,4 @@ public class Product {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    public Product(Long id, String title, Integer price) {
-        this.id = id;
-        this.title = title;
-        this.price = price;
-    }
-
-    public Product() {
-    }
-
 }

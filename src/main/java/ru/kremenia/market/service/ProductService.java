@@ -4,27 +4,38 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.kremenia.market.entities.Product;
 import ru.kremenia.market.repositories.ProductRepository;
+import ru.kremenia.market.soap.Productxml;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor  // Для всех обязательных полей создается конструктор
+@RequiredArgsConstructor
 public class ProductService {
-    // Внедрение репозитория продуктов
     private final ProductRepository productRepository;
 
-    // Метод возвращающий весь список продуктов
+    public static final Function<Product, Productxml> entityToSoap = p->{
+        Productxml productxml = new Productxml();
+        productxml.setId(p.getId());
+        productxml.setTitle(p.getTitle());
+        productxml.setPrice(p.getPrice());
+        return productxml;
+    };
+
+    public List<Productxml> findAllXml() {
+        return productRepository.findAll().stream().map(entityToSoap).collect(Collectors.toList());
+    }
+
     public List<Product> findAll() {
         return productRepository.findAll();
     }
 
-    // Метод возвращающий продукт по id
     public Optional<Product> findById(Long id) {
         return productRepository.findById(id);
     }
 
-    // Метод удаления по id
     public void deleteById(Long id) {
         productRepository.deleteById(id);
     }

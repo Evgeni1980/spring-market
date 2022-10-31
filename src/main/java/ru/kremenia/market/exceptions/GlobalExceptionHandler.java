@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-@ControllerAdvice  // Распространяется на контролер
-@Slf4j // аннотация для возможности использовать log
+@ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<AppError> exceptionHandler(ResourceNotFoundException e) {
