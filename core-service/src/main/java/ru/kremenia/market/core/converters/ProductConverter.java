@@ -11,11 +11,7 @@ public class ProductConverter {
         return new ProductDto(product.getId(), product.getTitle(), product.getPrice());
     }
 
-    public Product dtoToEntity(ProductDto productDto) {
-        Product p = new Product();
-        p.setId(productDto.getId());
-        p.setTitle(productDto.getTitle());
-        p.setPrice(productDto.getPrice());
-        return p;
+    public Product DtoToEntity(ProductDto productDto) {
+        return new Product(productDto.getId(), productDto.getTitle(), productDto.getPrice());
     }
 }

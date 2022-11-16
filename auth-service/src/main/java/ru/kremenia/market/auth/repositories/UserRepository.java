@@ -1,8 +1,10 @@
-package ru.kremenia.market.core.repositories;
+package ru.kremenia.market.auth.repositories;
+
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.kremenia.market.core.entities.User;
+import ru.kremenia.market.auth.entities.User;
+
 
 import java.util.Optional;
 

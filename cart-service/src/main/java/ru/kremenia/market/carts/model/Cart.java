@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 import ru.kremenia.market.api.ProductDto;
 
+
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.List;
 @Component
 public class Cart {
     private List<CartItem> items;
-    private int totalPrice;
+    private BigDecimal totalPrice;
 
     public Cart() {
         this.items = new ArrayList<>();
@@ -42,13 +44,13 @@ public class Cart {
 
     public void clear(){
         items.clear();
-        totalPrice = 0;
+        totalPrice = BigDecimal.valueOf(0);
     }
 
     private void recalculate() {
-        totalPrice = 0;
+        totalPrice = BigDecimal.valueOf(0);
         for (CartItem item: items) {
-            totalPrice += item.getPrice();
+            totalPrice = totalPrice.add(item.getPricePerProduct());
         }
     }
 }

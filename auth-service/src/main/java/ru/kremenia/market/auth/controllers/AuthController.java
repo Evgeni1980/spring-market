@@ -1,4 +1,4 @@
-package ru.kremenia.market.core.controllers;
+package ru.kremenia.market.auth.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -7,17 +7,15 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.kremenia.market.api.JwtRequest;
 import ru.kremenia.market.api.JwtResponse;
-import ru.kremenia.market.api.StringResponse;
-import ru.kremenia.market.core.service.UserService;
-import ru.kremenia.market.core.utils.JwtTokenUtil;
+import ru.kremenia.market.auth.exceptions.AppError;
+import ru.kremenia.market.auth.services.UserService;
+import ru.kremenia.market.auth.utils.JwtTokenUtil;
 
-import java.security.Principal;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,16 +29,10 @@ public class AuthController {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         } catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return new ResponseEntity<>(new AppError("CHECK_TOKEN_ERROR", "Incorrect username or password"), HttpStatus.UNAUTHORIZED);
         }
         UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
         String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));
     }
-
-    @GetMapping("/auth_check")
-    public StringResponse authCheck(Principal principal) {
-        return new StringResponse(principal.getName());
-    }
-
 }

@@ -3,11 +3,12 @@ package ru.kremenia.market.core.controllers;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.kremenia.market.api.ProductDto;
-import ru.kremenia.market.api.ResourceNotFoundException;
 import ru.kremenia.market.core.converters.ProductConverter;
 import ru.kremenia.market.core.entities.Product;
+import ru.kremenia.market.core.exceptions.ResourceNotFoundException;
 import ru.kremenia.market.core.service.ProductService;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,10 +19,20 @@ public class ProductController {
     private final ProductService productService;
     private final ProductConverter productConverter;
     @GetMapping
-    public List<ProductDto> findAllProducts() {
-        return productService.findAll().stream()
-                .map(productConverter::entityToDto)
-                .collect(Collectors.toList());
+    public List<ProductDto> findAllProducts(@RequestParam(required = false) Long minPrice, @RequestParam(required = false) Long maxPrice) {
+
+        if (minPrice != null && maxPrice == null) {
+            return productService.findProductByMin(BigDecimal.valueOf(minPrice)).stream().map(productConverter::entityToDto).collect(Collectors.toList());
+        }
+
+        if (minPrice != null && maxPrice != null) {
+            return productService.findBetween(BigDecimal.valueOf(minPrice), BigDecimal.valueOf(maxPrice)).stream().map(productConverter::entityToDto).collect(Collectors.toList());
+        }
+        if (minPrice == null && maxPrice != null) {
+            return productService.findProductByMax(BigDecimal.valueOf(maxPrice)).stream().map(productConverter::entityToDto).collect(Collectors.toList());
+        }
+
+        return productService.findAll().stream().map(productConverter::entityToDto).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")

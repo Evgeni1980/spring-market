@@ -1,4 +1,4 @@
-package ru.kremenia.market.core.utils;
+package ru.kremenia.market.auth.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class JwtTokenUtil {
     @Value("${jwt.secret}")
     private String secret;
- 
+
     @Value("${jwt.lifetime}")
     private Integer jwtLifetime;
 
@@ -31,7 +31,6 @@ public class JwtTokenUtil {
 
         Date issuedDate = new Date();
         Date expiredDate = new Date(issuedDate.getTime() + jwtLifetime);
-
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
@@ -41,18 +40,18 @@ public class JwtTokenUtil {
                 .compact();
     }
 
-    public String getUsernameFromToken(String token) {
-        return getAllClaimsFromToken(token).getSubject();
-    }
+//    private Claims getAllClaimsFromToken(String token) {
+//        return Jwts.parser()
+//                .setSigningKey(secret)
+//                .parseClaimsJws(token)
+//                .getBody();
+//    }
 
-    public List<String> getRoles(String token) {
-        return getAllClaimsFromToken(token).get("roles", List.class);
-    }
-
-    private Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser()
-                .setSigningKey(secret)
-                .parseClaimsJws(token)
-                .getBody();
-    }
+//    public String getUsernameFromToken(String token) {
+//        return getAllClaimsFromToken(token).getSubject();
+//    }
+//
+//    public List<String> getRoles(String token) {
+//        return getAllClaimsFromToken(token).get("roles", List.class);
+//    }
 }

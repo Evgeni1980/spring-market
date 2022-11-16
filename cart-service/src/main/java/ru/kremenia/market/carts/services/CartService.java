@@ -3,7 +3,6 @@ package ru.kremenia.market.carts.services;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.kremenia.market.api.ProductDto;
-import ru.kremenia.market.api.ResourceNotFoundException;
 import ru.kremenia.market.carts.integration.ProductServiceIntegration;
 import ru.kremenia.market.carts.model.Cart;
 
@@ -25,8 +24,7 @@ public class CartService {
     }
 
     public void add(Long productId) {
-        ProductDto product = productServiceIntegration.getProductById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException("Не удаётся добавить продукт с id:" + productId + "в корзину. Продукт не найден"));
+        ProductDto product = productServiceIntegration.getProductById(productId);
         Cart.add(product);
     }
 

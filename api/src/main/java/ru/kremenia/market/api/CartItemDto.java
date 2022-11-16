@@ -1,49 +1,52 @@
 package ru.kremenia.market.api;
 
+import java.math.BigDecimal;
+
 public class CartItemDto {
     private Long productId;
     private String productTitle;
     private int quantity;
-    private int pricePerProduct;
-    private int price;
+    private BigDecimal pricePerProduct;
+    private BigDecimal price;
 
     public String getProductTitle() {
         return productTitle;
     }
-
     public void setProductTitle(String productTitle) {
         this.productTitle = productTitle;
     }
-
     public Long getProductId() {
         return productId;
     }
-
     public void setProductId(Long productId) {
         this.productId = productId;
     }
-
     public int getQuantity() {
         return quantity;
     }
-
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
-    public int getPricePerProduct() {
+    public BigDecimal getPricePerProduct() {
         return pricePerProduct;
     }
-
-    public void setPricePerProduct(int pricePerProduct) {
+    public void setPricePerProduct(BigDecimal pricePerProduct) {
         this.pricePerProduct = pricePerProduct;
     }
-
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+    public CartItemDto() {
+    }
 
-    public void setPrice(int price) {
+    public CartItemDto(Long productId, String productTitle, int quantity, BigDecimal pricePerProduct, BigDecimal price) {
+        this.productId = productId;
+        this.productTitle = productTitle;
+        this.quantity = quantity;
+        this.pricePerProduct = pricePerProduct;
         this.price = price;
     }
 

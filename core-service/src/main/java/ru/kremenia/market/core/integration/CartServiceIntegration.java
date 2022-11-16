@@ -2,17 +2,29 @@ package ru.kremenia.market.core.integration;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 import ru.kremenia.market.api.CartDto;
-
-import java.util.Optional;
 
 @Component
 @AllArgsConstructor
 public class CartServiceIntegration {
-    private final RestTemplate restTemplate;
+    private final WebClient cartServiceWebClient;
 
-    public Optional<CartDto> getCart() {
-        return Optional.ofNullable(restTemplate.getForObject("http://localhost:8190/market-cart/api/v1/cart", CartDto.class));
+    public CartDto getCart() {
+        return cartServiceWebClient.get()
+                .uri("/api/v1/cart")
+                .retrieve()
+//                .onStatus(httpStatus -> httpStatus.value()== HttpStatus.NOT_FOUND.value(),
+//                        clientResponse -> Mono.error(new ResourceNotFoundException("Product not found")))
+                .bodyToMono(CartDto.class)
+                .block();
+    }
+
+    public void clear() {
+        cartServiceWebClient.get()
+                .uri("/api/v1/cart/clear")
+                .retrieve()
+                .toBodilessEntity()
+                .block();
     }
 }

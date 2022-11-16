@@ -38,7 +38,6 @@
                 <li class="nav-item" ng-show="isUserLoggedIn()" style="...">
                     <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Выйти</button>
                 </li>
-
                 <li class="nav-item" style="...">
                     <button class="btn btn-outline-warning btn-sm"
                             ng-click="authCheck()">Проверить пользователя</button>
@@ -48,8 +47,23 @@
     </nav>
 
     <h1>Market</h1>
+    <div class="col-12 mt-3">
+        <form class="form-inline">
+            <div class="form-group mb-2 mr-2">
+                <label for="minPrice" class="sr-only">Min price</label>
+                <input type="number" class="form-control" id="minPrice"
+                       name="minPrice" [(ngModel)]="minPrice" placeholder="minPrice">
+            </div>
+            <div class="form-group mb-2 mr-2">
+                <label for="maxPrice" class="sr-only">Max cost</label>
+                <input type="number" class="form-control" id="maxPrice"
+                       name="maxPrice" [(ngModel)]="maxPrice" placeholder="maxPrice">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2" ng-click="setMinAndMax(minPrice, maxPrice)">Сортировать</button>
+        </form>
+    </div>
     <h3>Список товаров</h3>
-    <table class="table table-hover" cellpadding="0" cellspacing="0">
+    <table class="table table-hover">
         <tr>
             <td>ID</td>
             <td>Название</td>
@@ -69,7 +83,7 @@
     </table>
     <p></p>
     <h3>Корзина</h3>
-    <table class="table table-hover" cellpadding="0" cellspacing="0">
+    <table class="table table-hover">
         <tr>
             <td>Название</td>
             <td>Количество</td>

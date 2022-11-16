@@ -9,7 +9,6 @@ import ru.kremenia.market.carts.services.CartService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/cart")
-@CrossOrigin("*")
 public class CartController {
     private final CartService cartService;
     private final CartConverter cartConverter;
