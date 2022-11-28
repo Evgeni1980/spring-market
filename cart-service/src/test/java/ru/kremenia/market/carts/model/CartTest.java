@@ -16,7 +16,7 @@ public class CartTest {
 
     @Test
     public void addTest() {
-        ProductDto productDto = new ProductDto(10l, "Banana", BigDecimal.valueOf(60));
+        ProductDto productDto = new ProductDto(10l, "Banana", BigDecimal.valueOf(60), "Food");
         cart.add(productDto);
         Mockito.verify(cart).add(productDto);
         Assertions.assertEquals(1, cart.getItems().size());

@@ -1,21 +1,21 @@
-create table users
+CREATE TABLE users
 (
     id         bigserial primary key,
-    username   varchar(255) not null,
-    password   varchar(255) not null,
+    username   varchar(36) not null,
+    password   varchar(80) not null,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
 );
 
-create table roles
+CREATE TABLE roles
 (
     id         bigserial primary key,
-    name       varchar(255) not null,
+    name       varchar(50) not null,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp
 );
 
-create table users_roles
+CREATE TABLE users_roles
 (
     user_id    bigint not null references users (id),
     role_id    bigint not null references roles (id),

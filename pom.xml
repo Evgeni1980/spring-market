@@ -13,16 +13,10 @@
         <module>auth-service</module>
     </modules>
 
-	<groupId>ru.kremenia</groupId>
-	<artifactId>spring-market</artifactId>
+	<groupId>ru.kremenia.market</groupId>
+	<artifactId>parent-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-market</name>
-	<description>Project for Spring Boot</description>
-
-	<properties>
-		<java.version>17</java.version>
-	</properties>
-
-
+	<description>Project Spring Market</description>
 
 </project>

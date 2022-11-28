@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MarchMarketAuthApplication {
+public class SpringMarketAuthApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(MarchMarketAuthApplication.class, args);
+		SpringApplication.run(SpringMarketAuthApplication.class, args);
 	}
 }

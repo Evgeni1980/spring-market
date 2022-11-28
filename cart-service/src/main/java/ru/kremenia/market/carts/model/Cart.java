@@ -44,11 +44,11 @@ public class Cart {
 
     public void clear(){
         items.clear();
-        totalPrice = BigDecimal.valueOf(0);
+        totalPrice = BigDecimal.ZERO;
     }
 
     private void recalculate() {
-        totalPrice = BigDecimal.valueOf(0);
+        totalPrice = BigDecimal.ZERO;
         for (CartItem item: items) {
             totalPrice = totalPrice.add(item.getPricePerProduct());
         }

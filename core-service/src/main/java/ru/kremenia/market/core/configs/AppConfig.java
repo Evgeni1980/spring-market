@@ -11,7 +11,6 @@ import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.netty.http.client.HttpClient;
 import reactor.netty.tcp.TcpClient;
-import ru.kremenia.market.carts.properties.ProductServiceIntegrationProperties;
 import ru.kremenia.market.core.properties.CartServiceIntegrationProperties;
 
 import java.util.concurrent.TimeUnit;
@@ -31,10 +30,10 @@ public class AppConfig {
                     connection.addHandlerLast(new ReadTimeoutHandler(cartServiceIntegrationProperties.getReadTimeout(), TimeUnit.MILLISECONDS));
                     connection.addHandlerLast(new WriteTimeoutHandler(cartServiceIntegrationProperties.getWriteTimeout(), TimeUnit.MILLISECONDS));
                 });
+
         return WebClient.builder()
                 .baseUrl(cartServiceIntegrationProperties.getUrl())
                 .clientConnector(new ReactorClientHttpConnector(HttpClient.from(tcpClient)))
                 .build();
     }
-
 }

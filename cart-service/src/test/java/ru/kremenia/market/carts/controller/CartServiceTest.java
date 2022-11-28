@@ -20,7 +20,7 @@ public class CartServiceTest {
 
     @Test
     public void addTest(){
-        ProductDto productDto = new ProductDto(4l, "Milk", BigDecimal.valueOf(40));
+        ProductDto productDto = new ProductDto(4l, "Milk", BigDecimal.valueOf(40), "Food");
         Cart cart = new Cart();
         Mockito.doReturn(productDto).when(productServiceIntegration).getProductById(4l);
         cart.add(productDto);

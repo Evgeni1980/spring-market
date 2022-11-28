@@ -1,12 +1,13 @@
 package ru.kremenia.market.core.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.*;
-import ru.kremenia.market.api.ProductDto;
-import ru.kremenia.market.core.converters.ProductConverter;
 import ru.kremenia.market.core.entities.Product;
 import ru.kremenia.market.core.exceptions.ResourceNotFoundException;
 import ru.kremenia.market.core.service.ProductService;
+import ru.kremenia.market.api.ProductDto;
+import ru.kremenia.market.core.converters.ProductConverter;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,20 +20,18 @@ public class ProductController {
     private final ProductService productService;
     private final ProductConverter productConverter;
     @GetMapping
-    public List<ProductDto> findAllProducts(@RequestParam(required = false) Long minPrice, @RequestParam(required = false) Long maxPrice) {
-
-        if (minPrice != null && maxPrice == null) {
-            return productService.findProductByMin(BigDecimal.valueOf(minPrice)).stream().map(productConverter::entityToDto).collect(Collectors.toList());
+    public List<ProductDto> findAllProducts(
+            @RequestParam(required = false, name = "min_price") BigDecimal minPrice,
+            @RequestParam(required = false, name = "max_price") BigDecimal maxPrice,
+            @RequestParam(required = false, name = "title") String title,
+            @RequestParam(defaultValue = "1", name = "p") Integer page
+    ) {
+        if (page < 1) {
+            page = 1;
         }
+        Specification<Product> spec = productService.createSpecByFilters(minPrice, maxPrice, title);
 
-        if (minPrice != null && maxPrice != null) {
-            return productService.findBetween(BigDecimal.valueOf(minPrice), BigDecimal.valueOf(maxPrice)).stream().map(productConverter::entityToDto).collect(Collectors.toList());
-        }
-        if (minPrice == null && maxPrice != null) {
-            return productService.findProductByMax(BigDecimal.valueOf(maxPrice)).stream().map(productConverter::entityToDto).collect(Collectors.toList());
-        }
-
-        return productService.findAll().stream().map(productConverter::entityToDto).collect(Collectors.toList());
+        return productService.findAll(spec, page - 1).map(productConverter::entityToDto).getContent();
     }
 
     @GetMapping("/{id}")

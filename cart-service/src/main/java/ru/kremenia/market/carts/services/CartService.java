@@ -7,33 +7,50 @@ import ru.kremenia.market.carts.integration.ProductServiceIntegration;
 import ru.kremenia.market.carts.model.Cart;
 
 import javax.annotation.PostConstruct;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
 public class CartService {
     private final ProductServiceIntegration productServiceIntegration;
-    private Cart Cart;
+//    @Value("${cart-service.cart-prefix}")
+//    private String cartPrefix;
+
+    private Map<String, Cart> carts;
 
     @PostConstruct
     public void init() {
-        Cart = new Cart();
+        carts = new HashMap<>();
     }
 
-    public Cart getCurrentCart() {
-        return Cart;
+//    public Cart getCurrentCart(String uuid) {
+//        String targetUuid = cartPrefix + uuid;
+//        if (!carts.containsKey(targetUuid)) {
+//            carts.put(targetUuid, new Cart());
+//        }
+//        return carts.get(targetUuid);
+//    }
+
+    public Cart getCurrentCart(String uuid) {
+        if (!carts.containsKey(uuid)) {
+            Cart cart = new Cart();
+            carts.put(uuid, cart);
+        }
+        return carts.get(uuid);
     }
 
-    public void add(Long productId) {
+    public void addToCart(String uuid, Long productId) {
         ProductDto product = productServiceIntegration.getProductById(productId);
-        Cart.add(product);
+        getCurrentCart(uuid).add(product);
     }
 
-    public void remove(Long productId) {
-        Cart.remove(productId);
+    public void remove(String uuid, Long productId) {
+        getCurrentCart(uuid).remove(productId);
     }
 
-    public void clear() {
-        Cart.clear();
+    public void clearCart(String uuid) {
+        getCurrentCart(uuid).clear();
     }
 
 }

@@ -40,18 +40,18 @@ public class JwtTokenUtil {
                 .compact();
     }
 
-//    private Claims getAllClaimsFromToken(String token) {
-//        return Jwts.parser()
-//                .setSigningKey(secret)
-//                .parseClaimsJws(token)
-//                .getBody();
-//    }
+    private Claims getAllClaimsFromToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+                .getBody();
+    }
 
-//    public String getUsernameFromToken(String token) {
-//        return getAllClaimsFromToken(token).getSubject();
-//    }
-//
-//    public List<String> getRoles(String token) {
-//        return getAllClaimsFromToken(token).get("roles", List.class);
-//    }
+    public String getUsernameFromToken(String token) {
+        return getAllClaimsFromToken(token).getSubject();
+    }
+
+    public List<String> getRoles(String token) {
+        return getAllClaimsFromToken(token).get("roles", List.class);
+    }
 }

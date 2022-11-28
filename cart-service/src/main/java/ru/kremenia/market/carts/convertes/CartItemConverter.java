@@ -6,15 +6,6 @@ import ru.kremenia.market.carts.model.CartItem;
 
 @Component
 public class  CartItemConverter {
-//    public CartItemDto entityToDto(CartItem cartItem) {
-//        CartItemDto cartItemDto = new CartItemDto();
-//        cartItemDto.setPrice(cartItem.getPrice());
-//        cartItemDto.setPricePerProduct(cartItem.getPricePerProduct());
-//        cartItemDto.setQuantity(cartItem.getQuantity());
-//        cartItemDto.setProductTitle(cartItem.getProductTitle());
-//        cartItemDto.setProductId(cartItem.getProductId());
-//        return cartItemDto;
-//    }
 
     public CartItemDto entityToDto(CartItem c) {
         return new CartItemDto(c.getProductId(), c.getProductTitle(), c.getQuantity(), c.getPricePerProduct(), c.getPrice());

@@ -1,14 +1,19 @@
 package ru.kremenia.market.core.converters;
 
 import org.springframework.stereotype.Component;
-import ru.kremenia.market.api.ProductDto;
 import ru.kremenia.market.core.entities.Product;
+import ru.kremenia.market.api.ProductDto;
 
 @Component
 public class ProductConverter {
 
     public ProductDto entityToDto(Product product) {
-        return new ProductDto(product.getId(), product.getTitle(), product.getPrice());
+        ProductDto productDto = new ProductDto();
+        productDto.setId(product.getId());
+        productDto.setTitle(product.getTitle());
+        productDto.setPrice(product.getPrice());
+        productDto.setCategoryTitle(product.getCategory().getTitle());
+        return productDto;
     }
 
     public Product DtoToEntity(ProductDto productDto) {
