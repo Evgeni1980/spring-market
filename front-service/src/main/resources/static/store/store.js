@@ -22,7 +22,6 @@ angular.module('market').controller('storeController', function ($scope, $http, 
 
     $scope.addToCart = function (productId) {
         $http.get(cartContextPath + 'api/v1/cart/' + $localStorage.marketGuestCartId + '/add/' + productId).then(function (response) {
-            $scope.loadCart();
         });
     }
 

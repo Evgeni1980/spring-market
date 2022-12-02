@@ -10,23 +10,23 @@ import ru.kremenia.market.core.exceptions.ResourceNotFoundException;
 import ru.kremenia.market.api.CartDto;
 
 @Component
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class CartServiceIntegration {
-    private final WebClient cartServiceWebClient;
+    private final WebClient productServiceWebClient;
 
     public CartDto getCart(String username) {
-        return cartServiceWebClient.get()
-                .uri("/api/v1/cart/0")
+        return productServiceWebClient.get()
+                .uri("/api/v1/cart/" + username)
                 .header("username", username)
                 .retrieve()
                 .onStatus(httpStatus -> httpStatus.value()== HttpStatus.NOT_FOUND.value(),
-                        clientResponse -> Mono.error(new ResourceNotFoundException("Product not found")))
+                        clientResponse -> Mono.error(new ResourceNotFoundException("Can't make order")))
                 .bodyToMono(CartDto.class)
                 .block();
     }
 
     public void clear(String username) {
-        cartServiceWebClient.get()
+        productServiceWebClient.get()
                 .uri("/api/v1/cart/0/clear")
                 .header("username", username)
                 .retrieve()

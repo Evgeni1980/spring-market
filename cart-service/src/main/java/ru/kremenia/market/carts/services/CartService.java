@@ -1,56 +1,50 @@
 package ru.kremenia.market.carts.services;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import ru.kremenia.market.api.ProductDto;
 import ru.kremenia.market.carts.integration.ProductServiceIntegration;
 import ru.kremenia.market.carts.model.Cart;
 
-import javax.annotation.PostConstruct;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.function.Consumer;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class CartService {
     private final ProductServiceIntegration productServiceIntegration;
-//    @Value("${cart-service.cart-prefix}")
-//    private String cartPrefix;
+    private final RedisTemplate<String, Object> redisTemplate;
 
-    private Map<String, Cart> carts;
-
-    @PostConstruct
-    public void init() {
-        carts = new HashMap<>();
-    }
-
-//    public Cart getCurrentCart(String uuid) {
-//        String targetUuid = cartPrefix + uuid;
-//        if (!carts.containsKey(targetUuid)) {
-//            carts.put(targetUuid, new Cart());
-//        }
-//        return carts.get(targetUuid);
-//    }
+    @Value("${cart-service.cart-prefix}")
+    private String cartPrefix;
 
     public Cart getCurrentCart(String uuid) {
-        if (!carts.containsKey(uuid)) {
-            Cart cart = new Cart();
-            carts.put(uuid, cart);
+        String targetUuid = cartPrefix + uuid;
+        if (!redisTemplate.hasKey(targetUuid)) {
+            redisTemplate.opsForValue().set(targetUuid, new Cart());
         }
-        return carts.get(uuid);
+        return (Cart) redisTemplate.opsForValue().get(targetUuid);
     }
+
 
     public void addToCart(String uuid, Long productId) {
         ProductDto product = productServiceIntegration.getProductById(productId);
-        getCurrentCart(uuid).add(product);
+        execute(uuid, cart -> cart.add(product));
     }
 
     public void remove(String uuid, Long productId) {
-        getCurrentCart(uuid).remove(productId);
+        execute(uuid, cart -> cart.remove(productId));
     }
 
     public void clearCart(String uuid) {
-        getCurrentCart(uuid).clear();
+        execute(uuid, Cart::clear);
+    }
+
+    private void execute (String uuid, Consumer<Cart> operation) {
+        Cart cart = getCurrentCart(uuid);
+        operation.accept(cart);
+        redisTemplate.opsForValue().set(cartPrefix + uuid, cart);
     }
 
 }

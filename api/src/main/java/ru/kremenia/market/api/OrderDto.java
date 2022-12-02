@@ -5,6 +5,8 @@ import java.util.List;
 
 public class OrderDto {
     private Long id;
+
+    private  String username;
     private List<OrderItemDto> items;
     private BigDecimal totalPrice;
 
@@ -14,6 +16,14 @@ public class OrderDto {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public List<OrderItemDto> getItems() {

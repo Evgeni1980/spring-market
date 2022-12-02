@@ -1,6 +1,6 @@
 package ru.kremenia.market.api;
 
-public class RegisterUserDto {
+public class RegistrationUserDto {
     private String username;
     private String password;
     private String confirmPassword;

@@ -6,7 +6,13 @@ import ru.kremenia.market.core.entities.OrderItem;
 
 @Component
 public class OrderItemConverter {
-    public OrderItemDto entityToDto(OrderItem o) {
-        return new OrderItemDto(o.getProduct().getId(), o.getProduct().getTitle(), o.getQuantity(), o.getTotalPrice(), o.getPrice());
+    public OrderItemDto entityToDto(OrderItem orderItem) {
+        OrderItemDto orderItemDto = new OrderItemDto();
+        orderItemDto.setProductId(orderItemDto.getProductId());
+        orderItemDto.setProductTitle(orderItem.getProduct().getTitle());
+        orderItemDto.setPrice(orderItem.getPrice());
+        orderItemDto.setQuantity(orderItem.getQuantity());
+        orderItemDto.setPricePerProduct(orderItem.getTotalPrice());
+        return orderItemDto;
     }
 }

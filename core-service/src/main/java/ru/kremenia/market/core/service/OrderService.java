@@ -42,12 +42,16 @@ public class OrderService {
         return order;
     }
 
-//    private BigDecimal countPrice(List<OrderItem> orderItems){
-//        BigDecimal total = BigDecimal.ZERO;
-//        for(OrderItem item: orderItems){
-//            total = total.add(item.getTotalPrice());
-//        }
-//        return total;
-//    }
+    private BigDecimal countPrice(List<OrderItem> orderItems){
+        BigDecimal total = BigDecimal.ZERO;
+        for(OrderItem item: orderItems){
+            total = total.add(item.getTotalPrice());
+        }
+        return total;
+    }
+
+    public List<Order> findByUsername(String username) {
+        return orderRepository.findByUsername(username);
+    }
 
 }

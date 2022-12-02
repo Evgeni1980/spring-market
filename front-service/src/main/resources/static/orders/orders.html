@@ -1,10 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div>
+    <p></p>
+    <h3>Заказы</h3>
+    <p></p>
+    <div>
+        <table class="table table-hover">
+            <tr>
+                <th>Номер заказа</th>
+                <th>Цена</th>
 
-</body>
+            </tr>
+            <tr ng-repeat="order in orders">
+                <td>{{order.id}}</td>
+                <td>{{order.totalPrice}}</td>
+            </tr>
+        </table>
+        <p></p>
+    </div>
+
+
+</div>
 </html>

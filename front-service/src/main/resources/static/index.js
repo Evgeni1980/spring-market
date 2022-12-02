@@ -22,6 +22,10 @@
                 templateUrl: 'orders/orders.html',
                 controller: 'ordersController'
             })
+            .when('/registration',{
+                templateUrl: 'registration/registration.html',
+                controller: 'regController'
+            })
             .otherwise({
                 redirectTo: '/'
             });
@@ -89,11 +93,5 @@ angular.module('market').controller('indexController', function ($scope, $http, 
             return false;
         }
     }
-
-    // $scope.setMinAndMax= function (minPrice, maxPrice){
-    //     $scope.minPrice = minPrice;
-    //     $scope.maxPrice = maxPrice;
-    //     $scope.loadProducts();
-    // }
 
 });

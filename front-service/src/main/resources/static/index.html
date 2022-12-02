@@ -35,7 +35,7 @@
                     <form class="align-middle" ng-submit="tryToAuth()">
                         <div class="input-group input-group-sm" style="...">
                             <input id="navLoginField" class="form-control" ng-model="user.username"
-                                   type="text" aria-describedby="inputGroup-sizing-sm" style="...">
+                                   type="text" aria-describedby="inputGroup-sizing-sm" style="">
 
                             <input id="navPasswordField" class="form-control" ng-model="user.password"
                                    type="password" aria-describedby="inputGroup-sizing-sm" style="...">
@@ -45,6 +45,10 @@
                             </button>
                         </div>
                     </form>
+                </li>
+                <li class="nav-item" ng-show="!isLoggedIn()">
+                    <a class="nav-link" href="#!/registration">Регистрация</a>
+                </li>
                 <li class="nav-item" ng-show="isUserLoggedIn()" style="...">
                     <button class="btn btn-outline-secondary btn-sm" ng-click="tryToLogout()">Выйти</button>
                 </li>
@@ -52,22 +56,7 @@
         </div>
     </nav>
 
-<!--    <h1>Market</h1>-->
-<!--    <div class="col-12 mt-3">-->
-<!--        <form class="form-inline">-->
-<!--            <div class="form-group mb-2 mr-2">-->
-<!--                <label for="minPrice" class="sr-only">Min price</label>-->
-<!--                <input type="number" class="form-control" id="minPrice"-->
-<!--                       name="minPrice" [(ngModel)]="minPrice" placeholder="minPrice">-->
-<!--            </div>-->
-<!--            <div class="form-group mb-2 mr-2">-->
-<!--                <label for="maxPrice" class="sr-only">Max price</label>-->
-<!--                <input type="number" class="form-control" id="maxPrice"-->
-<!--                       name="maxPrice" [(ngModel)]="maxPrice" placeholder="maxPrice">-->
-<!--            </div>-->
-<!--            <button type="submit" class="btn btn-primary mb-2" ng-click="setMinAndMax(minPrice, maxPrice)">Сортировать</button>-->
-<!--        </form>-->
-<!--    </div>-->
+
 
     <ng-view></ng-view>
 
@@ -76,6 +65,8 @@
     <script src="cart/cart.js"></script>
     <script src="orders/orders.js"></script>
     <script src="welcome/welcome.js"></script>
+    <script src="registration/registration.js"></script>
+
 
 </div>
 </body>
